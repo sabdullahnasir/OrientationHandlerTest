@@ -31,6 +31,7 @@ namespace OrientationHandlerMain
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
+
             GUILayout.Space(30);
             GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1));
             GameObject gameObject = (GameObject)target;
@@ -293,6 +294,8 @@ namespace OrientationHandlerMain
                     {
                         RectTransformData landScapeData = GetRectData(orientationUI.RectTransform);
                         orientationUI.OrientationData.orientationData.landscapeRightData = landScapeData;
+                        EditorUtility.SetDirty(orientationUI.orientationData);
+                        
                     }
                     catch (System.Exception e)
                     {
@@ -303,6 +306,7 @@ namespace OrientationHandlerMain
                 }
 
             }
+            AssetDatabase.SaveAssets();
         }
 
 
@@ -540,6 +544,7 @@ namespace OrientationHandlerMain
                     if (orientationUI.OrientationData == null)
                     {
                         ScreenOrientationData screenData = CreateScriptableObjectAsset(orientationUI);
+                        EditorUtility.SetDirty(screenData);
                         orientationUI.OrientationData = screenData;
                         orientationUI.orientationData.orientationData.originalPosition = GetRectData(rectTransform);
 
@@ -581,6 +586,8 @@ namespace OrientationHandlerMain
                         ScreenOrientationData screenData = CreateScriptableObjectAsset(orientationUI);
                         orientationUI.OrientationData = screenData;
                         orientationUI.orientationData.orientationData.originalPosition = GetRectData(rectTransform);
+                        EditorUtility.SetDirty(screenData);
+                        AssetDatabase.SaveAssetIfDirty(orientationUI);
 
 
                     }
